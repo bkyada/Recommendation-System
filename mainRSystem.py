@@ -1,12 +1,11 @@
 # coding: utf-8
 
-# # Assignment 3:  Recommendation systems
+# Author: bkyada
 #
-# Here we'll implement a content-based recommendation algorithm.
+# implemented a content-based recommendation algorithm.
 # It will use the list of genres for a movie as the content.
 # The data come from the MovieLens project: http://grouplens.org/datasets/movielens/
 
-# Please only use these imports.
 from collections import Counter, defaultdict
 import math
 import numpy as np
@@ -18,7 +17,7 @@ import urllib.request
 import zipfile
 
 def download_data():
-    """ DONE. Download and unzip data.
+    """ Download and unzip data.
     """
     url = 'https://www.dropbox.com/s/h9ubx22ftdkyvd5/ml-latest-small.zip?dl=1'
     urllib.request.urlretrieve(url, 'ml-latest-small.zip')
@@ -28,7 +27,7 @@ def download_data():
 
 
 def tokenize_string(my_string):
-    """ DONE. You should use this in your tokenize function.
+    """ convert string into token.
     """
     return re.findall('[\w\-]+', my_string.lower())
 
@@ -37,10 +36,8 @@ def tokenize(movies):
     """
     Append a new column to the movies DataFrame with header 'tokens'.
     This will contain a list of strings, one per token, extracted
-    from the 'genre' field of each movie. Use the tokenize_string method above.
-
-    Note: you may modify the movies parameter directly; no need to make
-    a new copy.
+    from the 'genre' field of each movie.
+    
     Params:
       movies...The movies DataFrame
     Returns:
@@ -51,7 +48,7 @@ def tokenize(movies):
     >>> movies['tokens'].tolist()
     [['horror', 'romance'], ['sci-fi']]
     """
-    ###TODO
+  
     tokens=[]
     
     for row in movies['genres']:
@@ -83,7 +80,7 @@ def featurize(movies):
       - The movies DataFrame, which has been modified to include a column named 'features'.
       - The vocab, a dict from term to int. Make sure the vocab is sorted alphabetically as in a2 (e.g., {'aardvark': 0, 'boy': 1, ...})
     """
-    ###TODO
+  
     token_list = []
     N = movies.shape[0]
     
@@ -119,7 +116,7 @@ def featurize(movies):
 
 
 def train_test_split(ratings):
-    """DONE.
+    """
     Returns a random split of the ratings matrix into a training and testing set.
     """
     test = set(range(len(ratings))[::1000])
@@ -139,7 +136,7 @@ def cosine_sim(a, b):
       The cosine similarity, defined as: dot(a, b) / ||a|| * ||b||
       where ||a|| indicates the Euclidean norm (aka L2 norm) of vector a.
     """
-    ###TODO
+    
     value = 0.0
     valueA=0
     for i in a.data:
@@ -184,7 +181,7 @@ def make_predictions(movies, ratings_train, ratings_test):
     Returns:
       A numpy array containing one predicted rating for each element of ratings_test.
     """
-    ###TODO
+    
     predicted=[]
     for row in ratings_test.itertuples():
         arr=[]
@@ -210,7 +207,7 @@ def make_predictions(movies, ratings_train, ratings_test):
 
 
 def mean_absolute_error(predictions, ratings_test):
-    """DONE.
+    """
     Return the mean absolute error of the predictions.
     """
     return np.abs(predictions - np.array(ratings_test.rating)).mean()
